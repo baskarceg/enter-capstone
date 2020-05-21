@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, jsonify
 from models import setup_db
 from flask_cors import CORS
 
@@ -56,6 +56,14 @@ def create_app(test_config=None):
         "error" : 422,
         "message" : "Unprocessable Entity"
         }), 422
+
+    @app.errorhandler(AuthError)
+    def auth_error(e):
+        return jsonify({
+                        "success": False,
+                        "error": e.status_code,
+                        "message": e.error
+                        }), e.status_code
 
     return app
 
