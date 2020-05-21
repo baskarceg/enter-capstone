@@ -19,33 +19,70 @@ def setup_db(app, database_path=database_path):
 
 
 '''
-Person
-Have title and release year
+Question
+
 '''
-class Person(db.Model):
-  __tablename__ = 'Person'
+class Movies(db.Model):
+    __tablename__ = 'movies'
 
-  id = Column(Integer, primary_key=True)
-  name = Column(String)
-  catchphrase = Column(String)
-
-  def __init__(self, name, catchphrase=""):
-    self.name = name
-    self.catchphrase = catchphrase
-
-  def format(self):
-    return {
-      'id': self.id,
-      'name': self.name,
-      'catchphrase': self.catchphrase}
-
-
-class Drink(db.Model):
-    # Autoincrementing, unique primary key
     id = Column(Integer, primary_key=True)
-    # String Title
-    title = Column(String(80), unique=True)
-    # the ingredients blob - this stores a lazy json blob
-    # the required datatype is [{'color': string, 'name':string, 'parts':number}]
-    recipe =  Column(String(180), nullable=False)
-    name = Column(String(10))
+    title = Column(String, nullable=False)
+    release_date = Column(String)
+
+    def __init__(self, title, release_date):
+        self.title = title
+        self.release_date = release_date
+
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def format(self):
+        return {
+          'id': self.id,
+          'title': self.title,
+          'release_date': self.release_date
+        }
+
+'''
+Actors
+
+'''
+class Actors(db.Model):
+    __tablename__ = 'actors'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    age  = Column(Integer, nullable=False)
+    gender = Column(String, nullable=False)
+
+    def __init__(self, name, age, gender):
+        self.name = name
+        self.age = age
+        self.category = category
+
+    def insert(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def format(self):
+        return {
+          'id': self.id,
+          'name': self.name,
+          'age': self.age,
+          'gender': self.gender
+        }

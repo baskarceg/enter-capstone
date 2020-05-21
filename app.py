@@ -2,7 +2,6 @@ import os
 from flask import Flask
 from models import setup_db
 from flask_cors import CORS
-from models import Person
 
 from auth import AuthError, requires_auth
 
