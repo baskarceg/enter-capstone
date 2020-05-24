@@ -3,6 +3,7 @@ from flask import request, _request_ctx_stack
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
+import os
 
 
 #AUTH0_DOMAIN = 'udacitybaskar.auth0.com'
@@ -10,7 +11,7 @@ AUTH0_DOMAIN = os.environ['AUTH_DOMAIN']
 #ALGORITHMS = ['RS256']
 ALGORITHMS = os.environ['ALGORITHMS']
 #API_AUDIENCE = 'casting'
-API_AUDIENCE = os.environ['API_AUDIENCE'] 
+API_AUDIENCE = os.environ['API_AUDIENCE']
 
 ## AuthError Exception
 '''
