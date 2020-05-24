@@ -13,20 +13,21 @@ def create_app(test_config=None):
     setup_db(app)
     CORS(app)
 
-    @app.route('/')
-    @requires_auth('get:drinks-detail')
-    def get_greeting(payload):
-        excited = 'true'
-        greeting = "Fuck You"
-        if excited == 'true': greeting = greeting + "!!!!!"
-        return greeting
-
-    @app.route('/coolkids')
-    def be_cool():
-        return "Be cool, man, be coooool! You're almost a FSND grad!"
+    # @app.route('/')
+    # @requires_auth('get:drinks-detail')
+    # def get_greeting(payload):
+    #     excited = 'true'
+    #     greeting = "Fuck You"
+    #     if excited == 'true': greeting = greeting + "!!!!!"
+    #     return greeting
+    #
+    # @app.route('/coolkids')
+    # def be_cool():
+    #     return "Be cool, man, be coooool! You're almost a FSND grad!"
 
     @app.route('/movies')
-    def get_all_movies():
+    @requires_auth('get:movies')
+    def get_all_movies(payload):
         try:
             movies = Movie.query.order_by(Movie.id).all()
             movies_list = [ movie.format() for movie in movies ]
@@ -38,7 +39,8 @@ def create_app(test_config=None):
             abort(400)
 
     @app.route('/actors')
-    def get_all_actors():
+    @requires_auth('get:actors')
+    def get_all_actors(payload):
         try:
             actors = Actor.query.order_by(Actor.id).all()
             actors_list = [ actor.format() for actor in actors ]
@@ -50,7 +52,8 @@ def create_app(test_config=None):
             abort(400)
 
     @app.route('/movies', methods=['POST'])
-    def create_new_movie():
+    @requires_auth('post:movies')
+    def create_new_movie(payload):
         body=request.get_json()
 
         try:
@@ -66,7 +69,8 @@ def create_app(test_config=None):
             abort(400)
 
     @app.route('/actors', methods=['POST'])
-    def create_new_actor():
+    @requires_auth('post:actors')
+    def create_new_actor(payload):
         body=request.get_json()
         try:
             if body is None:
@@ -81,7 +85,8 @@ def create_app(test_config=None):
             abort(400)
 
     @app.route('/movies/<movie_id>', methods=['DELETE'])
-    def delete_a_movie(movie_id):
+    @requires_auth('delete:movies')
+    def delete_a_movie(movie_id, payload):
         movie = Movie.query.filter(Movie.id==movie_id).one_or_none()
 
         if movie is None:
@@ -94,7 +99,8 @@ def create_app(test_config=None):
             })
 
     @app.route('/actors/<actor_id>', methods=['DELETE'])
-    def delete_an_actor(actor_id):
+    @requires_auth('delete:actors')
+    def delete_an_actor(actor_id, payload):
         actor = Actor.query.filter(Actor.id==actor_id).one_or_none()
 
         if actor is None:
@@ -107,7 +113,8 @@ def create_app(test_config=None):
             })
 
     @app.route('/movies/<movie_id>', methods=['PATCH'])
-    def modify_a_movie(movie_id):
+    @requires_auth('patch:movies')
+    def modify_a_movie(movie_id, payload):
         movie = Movie.query.filter(Movie.id==movie_id).one_or_none()
 
         body=request.get_json()
@@ -134,7 +141,8 @@ def create_app(test_config=None):
             abort(400)
 
     @app.route('/actors/<actor_id>', methods=['PATCH'])
-    def modify_an_actor(actor_id):
+    @requires_auth('patch:actors')
+    def modify_an_actor(actor_id, payload):
         actor = Actor.query.filter(Actor.id==actor_id).one_or_none()
 
         body=request.get_json()

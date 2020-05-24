@@ -5,9 +5,12 @@ from jose import jwt
 from urllib.request import urlopen
 
 
-AUTH0_DOMAIN = 'udacitybaskar.auth0.com'
-ALGORITHMS = ['RS256']
-API_AUDIENCE = 'images'
+#AUTH0_DOMAIN = 'udacitybaskar.auth0.com'
+AUTH0_DOMAIN = os.environ['AUTH_DOMAIN']
+#ALGORITHMS = ['RS256']
+ALGORITHMS = os.environ['ALGORITHMS']
+#API_AUDIENCE = 'casting'
+API_AUDIENCE = os.environ['API_AUDIENCE'] 
 
 ## AuthError Exception
 '''
@@ -101,6 +104,7 @@ def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
     unverified_header = jwt.get_unverified_header(token)
+    print(unverified_header)
     rsa_key = {}
     if 'kid' not in unverified_header:
         raise AuthError({
@@ -110,6 +114,7 @@ def verify_decode_jwt(token):
 
     for key in jwks['keys']:
         if key['kid'] == unverified_header['kid']:
+            print(key['kid'])
             rsa_key = {
                 'kty': key['kty'],
                 'kid': key['kid'],
@@ -118,6 +123,7 @@ def verify_decode_jwt(token):
                 'e': key['e']
             }
     if rsa_key:
+        print(rsa_key)
         try:
             payload = jwt.decode(
                 token,
@@ -126,6 +132,7 @@ def verify_decode_jwt(token):
                 audience=API_AUDIENCE,
                 issuer='https://' + AUTH0_DOMAIN + '/'
             )
+            print(payload)
 
             return payload
 
@@ -165,13 +172,14 @@ def requires_auth(permission=''):
         @wraps(f)
         def wrapper(*args, **kwargs):
             token = get_token_auth_header()
-            try:
-                payload = verify_decode_jwt(token)
-            except:
-                raise AuthError({
-                            'code': 'invalid_token',
-                            'description': 'Unable to decode the Bearer Token.'
-                        }, 400)
+            payload = verify_decode_jwt(token)
+            # try:
+            #     payload = verify_decode_jwt(token)
+            # except:
+            #     raise AuthError({
+            #                 'code': 'invalid_token',
+            #                 'description': 'Unable to decode the Bearer Token.'
+            #             }, 400)
             check_permissions(permission, payload)
             return f(payload, *args, **kwargs)
 
