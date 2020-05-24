@@ -1,7 +1,9 @@
 import os
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, abort
 from models import setup_db
 from flask_cors import CORS
+from sqlalchemy.exc import IntegrityError
+from models import Movie, Actor
 
 from auth import AuthError, requires_auth
 
@@ -15,8 +17,6 @@ def create_app(test_config=None):
     @requires_auth('get:drinks-detail')
     def get_greeting(payload):
         excited = 'true'
-        #persons = Person.query.all()
-        #print(persons)
         greeting = "Fuck You"
         if excited == 'true': greeting = greeting + "!!!!!"
         return greeting
@@ -24,6 +24,145 @@ def create_app(test_config=None):
     @app.route('/coolkids')
     def be_cool():
         return "Be cool, man, be coooool! You're almost a FSND grad!"
+
+    @app.route('/movies')
+    def get_all_movies():
+        try:
+            movies = Movie.query.order_by(Movie.id).all()
+            movies_list = [ movie.format() for movie in movies ]
+            return jsonify({
+            'movies_list' : movies_list,
+            'success' : True
+            })
+        except AttributeError:
+            abort(400)
+
+    @app.route('/actors')
+    def get_all_actors():
+        try:
+            actors = Actor.query.order_by(Actor.id).all()
+            actors_list = [ actor.format() for actor in actors ]
+            return jsonify({
+            'actors_list' : actors_list,
+            'success' : True
+            })
+        except AttributeError:
+            abort(400)
+
+    @app.route('/movies', methods=['POST'])
+    def create_new_movie():
+        body=request.get_json()
+
+        try:
+            if body is None:
+                abort(400)
+            else:
+                movie = Movie(body["title"], body["release_date"])
+                movie.insert()
+                return jsonify({
+                'success' : True
+                })
+        except IntegrityError:
+            abort(400)
+
+    @app.route('/actors', methods=['POST'])
+    def create_new_actor():
+        body=request.get_json()
+        try:
+            if body is None:
+                abort(400)
+            else:
+                actor = Actor(body["name"], body["age"], body["gender"])
+                actor.insert()
+                return jsonify({
+                'success' : True
+                })
+        except IntegrityError:
+            abort(400)
+
+    @app.route('/movies/<movie_id>', methods=['DELETE'])
+    def delete_a_movie(movie_id):
+        movie = Movie.query.filter(Movie.id==movie_id).one_or_none()
+
+        if movie is None:
+            abort(404)
+
+        else :
+            movie.delete()
+            return jsonify({
+            'success' : True
+            })
+
+    @app.route('/actors/<actor_id>', methods=['DELETE'])
+    def delete_an_actor(actor_id):
+        actor = Actor.query.filter(Actor.id==actor_id).one_or_none()
+
+        if actor is None:
+            abort(404)
+
+        else :
+            actor.delete()
+            return jsonify({
+            'success' : True
+            })
+
+    @app.route('/movies/<movie_id>', methods=['PATCH'])
+    def modify_a_movie(movie_id):
+        movie = Movie.query.filter(Movie.id==movie_id).one_or_none()
+
+        body=request.get_json()
+
+        try:
+            if body is None:
+                abort(400)
+
+            else:
+
+                if "title" in body:
+                    movie.title = body["title"]
+
+                if "release_date" in body:
+                    movie.release_date = body["release_date"]
+
+                movie.update()
+
+                return jsonify({
+                'success' : True
+                })
+
+        except IntegrityError:
+            abort(400)
+
+    @app.route('/actors/<actor_id>', methods=['PATCH'])
+    def modify_an_actor(actor_id):
+        actor = Actor.query.filter(Actor.id==actor_id).one_or_none()
+
+        body=request.get_json()
+
+        try:
+            if body is None:
+                abort(400)
+
+            else:
+
+                if "name" in body:
+                    actor.name = body["name"]
+
+                if "age" in body:
+                    actor.age = body["age"]
+
+                if "gender" in body:
+                    actor.gender = body["gender"]
+
+                actor.update()
+
+                return jsonify({
+                'actor' : actor.format(),
+                'success' : True
+                })
+
+        except IntegrityError:
+            abort(400)
 
     @app.errorhandler(404)
     def not_found(error):

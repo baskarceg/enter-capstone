@@ -22,7 +22,7 @@ def setup_db(app, database_path=database_path):
 Question
 
 '''
-class Movies(db.Model):
+class Movie(db.Model):
     __tablename__ = 'movies'
 
     id = Column(Integer, primary_key=True)
@@ -55,7 +55,7 @@ class Movies(db.Model):
 Actors
 
 '''
-class Actors(db.Model):
+class Actor(db.Model):
     __tablename__ = 'actors'
 
     id = Column(Integer, primary_key=True)
@@ -66,7 +66,7 @@ class Actors(db.Model):
     def __init__(self, name, age, gender):
         self.name = name
         self.age = age
-        self.category = category
+        self.gender = gender
 
     def insert(self):
         db.session.add(self)
