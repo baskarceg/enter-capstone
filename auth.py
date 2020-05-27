@@ -4,14 +4,15 @@ from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
 import os
+from jose import exceptions
 
 
-#AUTH0_DOMAIN = 'udacitybaskar.auth0.com'
-AUTH0_DOMAIN = os.environ['AUTH_DOMAIN']
-#ALGORITHMS = ['RS256']
-ALGORITHMS = os.environ['ALGORITHMS']
-#API_AUDIENCE = 'casting'
-API_AUDIENCE = os.environ['API_AUDIENCE']
+AUTH0_DOMAIN = 'udacitybaskar.auth0.com'
+#AUTH0_DOMAIN = os.environ['AUTH_DOMAIN']
+ALGORITHMS = ['RS256']
+#ALGORITHMS = os.environ['ALGORITHMS']
+API_AUDIENCE = 'casting'
+#API_AUDIENCE = os.environ['API_AUDIENCE']
 
 ## AuthError Exception
 '''
@@ -102,11 +103,19 @@ def check_permissions(permission, payload):
     !!NOTE urlopen has a common certificate error described here: https://stackoverflow.com/questions/50236117/scraping-ssl-certificate-verify-failed-error-for-http-en-wikipedia-org
 '''
 def verify_decode_jwt(token):
+    print("Passed 3")
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
+    print("Passed 4")
     jwks = json.loads(jsonurl.read())
-    unverified_header = jwt.get_unverified_header(token)
-    print(unverified_header)
     rsa_key = {}
+    print("Passed 5")
+    try:
+        unverified_header = jwt.get_unverified_header(token)
+    except exceptions.JWTError:
+        raise AuthError({
+            'code': 'invalid_header',
+            'description': 'Unable to parse authentication token.'
+        }, 400)
     if 'kid' not in unverified_header:
         raise AuthError({
             'code': 'invalid_header',
@@ -115,7 +124,6 @@ def verify_decode_jwt(token):
 
     for key in jwks['keys']:
         if key['kid'] == unverified_header['kid']:
-            print(key['kid'])
             rsa_key = {
                 'kty': key['kty'],
                 'kid': key['kid'],
@@ -123,8 +131,8 @@ def verify_decode_jwt(token):
                 'n': key['n'],
                 'e': key['e']
             }
+    print("Passed 7")
     if rsa_key:
-        print(rsa_key)
         try:
             payload = jwt.decode(
                 token,
@@ -133,7 +141,6 @@ def verify_decode_jwt(token):
                 audience=API_AUDIENCE,
                 issuer='https://' + AUTH0_DOMAIN + '/'
             )
-            print(payload)
 
             return payload
 
@@ -173,14 +180,9 @@ def requires_auth(permission=''):
         @wraps(f)
         def wrapper(*args, **kwargs):
             token = get_token_auth_header()
+            print("Passed 1")
             payload = verify_decode_jwt(token)
-            # try:
-            #     payload = verify_decode_jwt(token)
-            # except:
-            #     raise AuthError({
-            #                 'code': 'invalid_token',
-            #                 'description': 'Unable to decode the Bearer Token.'
-            #             }, 400)
+            print("Passed 2")
             check_permissions(permission, payload)
             return f(payload, *args, **kwargs)
 
