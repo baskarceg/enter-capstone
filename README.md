@@ -295,7 +295,10 @@ IF movie_id is not available
 ```
 
 ## Testing
-To run the tests, run
+To run the tests,
+
+```bash
 dropdb capstone_test
 createdb capstone_test
 python test_app.py
+```
