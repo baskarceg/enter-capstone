@@ -259,13 +259,43 @@ IF actor_id is not available
   "success": false
 }
 
+PATCH '/movies/<movie_id>'
+- It updates the movie with the passed actor , with the values passed in the body
+- Request Arguments: None
+- Request Body : could contain any one or all of name, age and gender.
+
+- Sample Body  
+
+  {
+    "release_date": "2002-10-02"
+  }
+
+- Returns: Success as true and the movie object if the movie_id was present , 404 error if the movie_id was not present
+
+IF movie_id is available
+
+{
+    "movie": {
+        "id": 1,
+        "release_date": "Wed, 02 Oct 2002 00:00:00 GMT",
+        "title": "Shawshank Redemption"
+    },
+    "success": true
+}
+
+IF movie_id is not available
+
+{
+  "error": 404,
+  "message": "Not Found",
+  "success": false
+}
 
 
+```
 
 ## Testing
 To run the tests, run
-```
 dropdb capstone_test
 createdb capstone_test
 python test_app.py
-```
