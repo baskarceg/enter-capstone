@@ -1,0 +1,742 @@
+{
+	"info": {
+		"_postman_id": "2dd7e261-1c41-4299-a363-813b019cc5b3",
+		"name": "Capstone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Casting Agent",
+			"item": [
+				{
+					"name": "Post Movie",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\":\"Shawshank Redemption\",\n\t\"release_date\":\"1994\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://enter-capstone.herokuapp.com/movies",
+							"protocol": "https",
+							"host": [
+								"enter-capstone",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Actor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Kamalhasan\",\n\t\"age\":67,\n\t\"gender\":\"Male\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://enter-capstone.herokuapp.com/actors",
+							"protocol": "https",
+							"host": [
+								"enter-capstone",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Movies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://enter-capstone.herokuapp.com/movies",
+							"protocol": "https",
+							"host": [
+								"enter-capstone",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Actors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://enter-capstone.herokuapp.com/actors",
+							"protocol": "https",
+							"host": [
+								"enter-capstone",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Movie",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://enter-capstone.herokuapp.com/movies/1",
+							"protocol": "https",
+							"host": [
+								"enter-capstone",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"movies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an actor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/actors/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"actors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch a Movie",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"release_date\":\"1995\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/movies/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"movies",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch an Actor",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Kamalsada\",\n\t\"age\":32,\n\t\"gender\":\"Male\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/actors/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"actors",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjJPSWJpSm9Ua2JWUDROMkR1dU5yeCJ9.eyJpc3MiOiJodHRwczovL3VkYWNpdHliYXNrYXIuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlOTA5MmI4MTQ0MWUzMGMxNjU4NDQ0ZiIsImF1ZCI6ImNhc3RpbmciLCJpYXQiOjE1OTAyOTczMzMsImV4cCI6MTU5MDMwNDUzMywiYXpwIjoiWkZ0ME42Y0NxTGQyVlJyc0dXcTRrUjdDWnBlWlREVG0iLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIl19.dhVLpCwS3ZC10ThYjs0uS8H5zJNw9PEiKC6fNiLKfuN041_nG-RV3IkK8cb6cpzXoteyFOhMgFX_Zoq592L5x6JghvFS0FTmxtgQmOfchmaDCm63Ptui9oHC1qUYZRkP2QNXzMsgrftKc55V4-7ocYW7VxVYEqnAZGaYfZ5J6XDcpOzoZGjyGMkHa_g5PdQ_r-zqi9BtEZmxfVs_4h3cMrP8vdLTBn4Gojx4AF84yqPGvKa73EMsYVEYg2s7L0CyZtHVY-lrV8KiAk4WFgcbm0XgYUBwa9ziw_TPy_XrHyw5V4OBgR2dwJmeGGsaoRODWx7inmC2N15kTB79L-6o6Q",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "08d0b2a7-f42d-4f3c-b96a-f6a7b1db541b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "40a299b7-23e3-4b51-87d8-5c74995b7d03",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Casting Director",
+			"item": [
+				{
+					"name": "Post Movie",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\":\"Shawshank Redemption\",\n\t\"release_date\":\"1994\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://enter-capstone.herokuapp.com/movies",
+							"protocol": "https",
+							"host": [
+								"enter-capstone",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Actor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Kamalhasan\",\n\t\"age\":67,\n\t\"gender\":\"Male\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://enter-capstone.herokuapp.com/actors",
+							"protocol": "https",
+							"host": [
+								"enter-capstone",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Movies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://enter-capstone.herokuapp.com/movies",
+							"protocol": "https",
+							"host": [
+								"enter-capstone",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Actors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://enter-capstone.herokuapp.com/actors",
+							"protocol": "https",
+							"host": [
+								"enter-capstone",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Movie",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://enter-capstone.herokuapp.com/movies/1",
+							"protocol": "https",
+							"host": [
+								"enter-capstone",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"movies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an actor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/actors/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"actors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch a Movie",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"release_date\":\"1995\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/movies/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"movies",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch an Actor",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Kamalsada\",\n\t\"age\":32,\n\t\"gender\":\"Male\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/actors/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"actors",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjJPSWJpSm9Ua2JWUDROMkR1dU5yeCJ9.eyJpc3MiOiJodHRwczovL3VkYWNpdHliYXNrYXIuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlOTA5MmI4MTQ0MWUzMGMxNjU4NDQ0ZiIsImF1ZCI6ImNhc3RpbmciLCJpYXQiOjE1OTAyOTczMzMsImV4cCI6MTU5MDMwNDUzMywiYXpwIjoiWkZ0ME42Y0NxTGQyVlJyc0dXcTRrUjdDWnBlWlREVG0iLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIl19.dhVLpCwS3ZC10ThYjs0uS8H5zJNw9PEiKC6fNiLKfuN041_nG-RV3IkK8cb6cpzXoteyFOhMgFX_Zoq592L5x6JghvFS0FTmxtgQmOfchmaDCm63Ptui9oHC1qUYZRkP2QNXzMsgrftKc55V4-7ocYW7VxVYEqnAZGaYfZ5J6XDcpOzoZGjyGMkHa_g5PdQ_r-zqi9BtEZmxfVs_4h3cMrP8vdLTBn4Gojx4AF84yqPGvKa73EMsYVEYg2s7L0CyZtHVY-lrV8KiAk4WFgcbm0XgYUBwa9ziw_TPy_XrHyw5V4OBgR2dwJmeGGsaoRODWx7inmC2N15kTB79L-6o6Q",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "08d0b2a7-f42d-4f3c-b96a-f6a7b1db541b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "40a299b7-23e3-4b51-87d8-5c74995b7d03",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Executive Producer",
+			"item": [
+				{
+					"name": "Post Movie",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\":\"Shawshank Redemption\",\n\t\"release_date\":\"1994\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://enter-capstone.herokuapp.com/movies",
+							"protocol": "https",
+							"host": [
+								"enter-capstone",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Actor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"Kamalhasan\",\n\t\"age\":67,\n\t\"gender\":\"Male\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://enter-capstone.herokuapp.com/actors",
+							"protocol": "https",
+							"host": [
+								"enter-capstone",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Movies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://enter-capstone.herokuapp.com/movies",
+							"protocol": "https",
+							"host": [
+								"enter-capstone",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Actors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://enter-capstone.herokuapp.com/actors",
+							"protocol": "https",
+							"host": [
+								"enter-capstone",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Movie",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://enter-capstone.herokuapp.com/movies/1",
+							"protocol": "https",
+							"host": [
+								"enter-capstone",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"movies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an actor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/actors/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"actors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch a Movie",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"release_date\":\"1995\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/movies/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"movies",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch an Actor",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Kamalsada\",\n\t\"age\":32,\n\t\"gender\":\"Male\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/actors/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"actors",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjJPSWJpSm9Ua2JWUDROMkR1dU5yeCJ9.eyJpc3MiOiJodHRwczovL3VkYWNpdHliYXNrYXIuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlOTA5MmI4MTQ0MWUzMGMxNjU4NDQ0ZiIsImF1ZCI6ImNhc3RpbmciLCJpYXQiOjE1OTAyOTczMzMsImV4cCI6MTU5MDMwNDUzMywiYXpwIjoiWkZ0ME42Y0NxTGQyVlJyc0dXcTRrUjdDWnBlWlREVG0iLCJzY29wZSI6IiIsInBlcm1pc3Npb25zIjpbImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIl19.dhVLpCwS3ZC10ThYjs0uS8H5zJNw9PEiKC6fNiLKfuN041_nG-RV3IkK8cb6cpzXoteyFOhMgFX_Zoq592L5x6JghvFS0FTmxtgQmOfchmaDCm63Ptui9oHC1qUYZRkP2QNXzMsgrftKc55V4-7ocYW7VxVYEqnAZGaYfZ5J6XDcpOzoZGjyGMkHa_g5PdQ_r-zqi9BtEZmxfVs_4h3cMrP8vdLTBn4Gojx4AF84yqPGvKa73EMsYVEYg2s7L0CyZtHVY-lrV8KiAk4WFgcbm0XgYUBwa9ziw_TPy_XrHyw5V4OBgR2dwJmeGGsaoRODWx7inmC2N15kTB79L-6o6Q",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "08d0b2a7-f42d-4f3c-b96a-f6a7b1db541b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "40a299b7-23e3-4b51-87d8-5c74995b7d03",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

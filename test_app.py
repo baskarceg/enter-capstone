@@ -4,9 +4,6 @@ import json
 from flask_sqlalchemy import SQLAlchemy
 from app import create_app
 from models import setup_db, db, Actor, Movie
-from dotenv import load_dotenv
-
-load_dotenv()
 
 EXEC_TOKEN = os.environ['EXEC_TOKEN']
 ASSIS_TOKEN = os.environ['ASSIS_TOKEN']
@@ -355,7 +352,7 @@ class TriviaTestCase(unittest.TestCase):
     Test case for no Auth Header Error
     """
 
-    def test_get_movies_cast_assist(self):
+    def test_header_missing_error(self):
         result = self.client().get('/movies')
         data = json.loads(result.data)
         message = data['message']
@@ -366,11 +363,11 @@ class TriviaTestCase(unittest.TestCase):
     """
     Test case for Token expired Error
     """
-    def test_get_movies_cast_assist(self):
+    def test_unable_parse_token_error(self):
         result = self.client().get('/movies', headers={"Authorization": "Bearer {}".format(ASSIS_TOKEN_INVALID)})
         data = json.loads(result.data)
         message = data['message']
-        self.assertEqual(result.status_code, 401)
+        self.assertEqual(result.status_code, 400)
         self.assertEqual(data['success'], False)
         self.assertEqual(message['description'], "Unable to parse authentication token.")
 

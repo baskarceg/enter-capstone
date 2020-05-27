@@ -1,6 +1,42 @@
-# Full Stack Trivia API Backend
+# Capstone Casting Agency
 
-## Getting Started
+The Casting Agency is a company that is responsible for creating movies and managing and assigning actors to those movies.
+
+The purpose of this project is to create a system to simplify and streamline this process
+
+The system consists of the following models
+
+  - Movies with attributes title and release date
+  - Actors with attributes name, age and gender
+
+The system consists of the following endpoints
+
+  - GET /actors and /movies
+  - POST /actors and /movies
+  - DELETE /actors and /movies
+  - PATCH /actors and /movies
+
+The system consists of the following Roles
+
+  - Casting Assistant
+      - Can view actors and movies
+
+  - Casting Director
+      - All permissions a Casting Assistant has and…
+      - Add or delete an actor from the database
+      - Modify actors or movies
+
+  - Executive Producer
+      - All permissions a Casting Director has and…
+      - Add or delete a movie from the database
+
+
+Live appication is hosted on Heroku in the below URL:
+https://enter-capstone.herokuapp.com/
+
+You can test the endpoints by importing the postman collection 'enter_capstone.json'
+
+The Tokens for all three roles are available in the collection and also the setup.sh file
 
 ### Installing Dependencies
 
@@ -52,146 +88,59 @@ PATCH '/movies/<movie_id>'
 PATCH '/actors/<actor_id>'
 
 
-GET '/categories'
-- Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
+GET '/movies'
+- Fetches a list of movies form the database
 - Request Arguments: None
-- Returns: An object with a single key, categories, that contains a object of id: category_string key:value pairs.
-{'1' : "Science",
-'2' : "Art",
-'3' : "Geography",
-'4' : "History",
-'5' : "Entertainment",
-'6' : "Sports"}
-
-GET '/questions'
-- Fetches a list of questions, number of total questions, current category, categories based on the page number passed in the argument
-- Request Arguments: page
 - Returns:
+    - movies_list - A list of movie objects
 
-categories - An object with a single key, categories, that contains a object of id: category_string key:value pairs
+- Sample Output
 
-total_questions - the total number of questions in the database
-
-current_category - The current category
-
-questions - A list of question objects
-
-
-If the page is within limits
-
-{
-  "categories": {
-    "1": "Science",
-    "2": "Art",
-    "3": "Geography",
-    "4": "History",
-    "5": "Entertainment",
-    "6": "Sports"
-  },
-  "current_category": "All",
-  "questions": [
     {
-      "answer": "Agra",
-      "category": 3,
-      "difficulty": 2,
-      "id": 15,
-      "question": "The Taj Mahal is located in which Indian city?"
-    },
-    {
-      "answer": "Escher",
-      "category": 2,
-      "difficulty": 1,
-      "id": 16,
-      "question": "Which Dutch graphic artist\u2013initials M C was a creator of optical illusions?"
-    },
-    {
-      "answer": "Mona Lisa",
-      "category": 2,
-      "difficulty": 3,
-      "id": 17,
-      "question": "La Giaconda is better known as what?"
-    },
-    {
-      "answer": "One",
-      "category": 2,
-      "difficulty": 4,
-      "id": 18,
-      "question": "How many paintings did Van Gogh sell in his lifetime?"
-    },
-    {
-      "answer": "Jackson Pollock",
-      "category": 2,
-      "difficulty": 2,
-      "id": 19,
-      "question": "Which American artist was a pioneer of Abstract Expressionism, and a leading exponent of action painting?"
-    },
-    {
-      "answer": "The Liver",
-      "category": 1,
-      "difficulty": 4,
-      "id": 20,
-      "question": "What is the heaviest organ in the human body?"
-    },
-    {
-      "answer": "Alexander Fleming",
-      "category": 1,
-      "difficulty": 3,
-      "id": 21,
-      "question": "Who discovered penicillin?"
-    },
-    {
-      "answer": "Blood",
-      "category": 1,
-      "difficulty": 4,
-      "id": 22,
-      "question": "Hematology is a branch of medicine involving the study of what?"
-    },
-    {
-      "answer": "Scarab",
-      "category": 4,
-      "difficulty": 4,
-      "id": 23,
-      "question": "Which dung beetle was worshipped by the ancient Egyptians?"
+        "movies_list": [
+            {
+                "id": 1,
+                "release_date": "Wed, 28 Dec 1994 00:00:00 GMT",
+                "title": "Shawshank Redemption"
+            }
+        ],
+        "success": true
     }
-  ],
-  "success": true,
-  "total_questions": 19
-}
 
-If Page is out of bounds
-
-{
-  "error": 404,
-  "message": "Not Found",
-  "success": false
-}
-
-DELETE '/questions/<question_id>'
-- It deletes the question with the passed question ID
+GET '/actors'
+- Fetches a list of actors form the database
 - Request Arguments: None
-- Returns: Success as true if the question_id was present , 404 error if the question_id was not present
+- Returns:
+    - actors_list - A list of actor objects
 
-IF question_id is available
+- Sample Output
 
-{
-  "success": true
-}
+    {
+    "actors_list": [
+        {
+            "age": 67,
+            "gender": "Male",
+            "id": 1,
+            "name": "Kamalhasan"
+        }
+    ],
+    "success": true
+    }
 
-IF question_id is not available
-
-{
-  "error": 404,
-  "message": "Not Found",
-  "success": false
-}
-
-
-POST '/questions'
-- Posts a new question to the database
+POST '/movies'
+- Posts a new movie to the database
 - Request Arguments: None
-- Request Body : contains the question and answer text, category, and difficulty score.
-Example
-{'question':'Test','answer':'Test','category':4,'difficulty':2}
+- Request Body : contains the title and release_date.
+
+- Sample Body  
+
+    {
+    "title":"Shawshank Redemption",
+    "release_date": "1994-12-28"
+    }
+
+Please not that the release_date should be in "yyyy-mm-dd" format
+
 - Returns: Returns Success or 400 error based on if the insert is successful
 
 If success
@@ -208,42 +157,30 @@ If error
    "message":"Bad Request"
 }
 
-POST '/questions/search'
-
-- It returns questions based on a search term. It returns all the questions questions for which the search term is a substring of the question.
+POST '/actors'
+- Posts a new actor to the database
 - Request Arguments: None
-- Request Body : contains the search_term
-Example
-{'searchTerm':'you'}
-- Returns:
+- Request Body : contains the name, age and gender.
+
+- Sample Body  
+
+    {
+    "name":"Vijay",
+    "age":46,
+    "gender":"Male"
+    }
+
+Please not that the release_date should be in "yyyy-mm-dd" format
+
+- Returns: Returns Success or 400 error based on if the insert is successful
 
 If success
 
-questions - the list of objects that has the search term as the substring
-total_questions - total number of questions that matches the criteria  
-
 {
-  "questions": [
-    {
-      "answer": "Edward Scissorhands",
-      "category": 5,
-      "difficulty": 3,
-      "id": 6,
-      "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
-    },
-    {
-      "answer": "The Palace of Versailles",
-      "category": 3,
-      "difficulty": 3,
-      "id": 14,
-      "question": "In which royal palace would you find the Hall of Mirrors?"
-    }
-  ],
-  "success": true,
-  "total_questions": 2
+  'success':True
 }
 
-If failure
+If error
 
 {
    "success":False,
@@ -251,65 +188,18 @@ If failure
    "message":"Bad Request"
 }
 
-GET '/categories/<category_id>/questions'
-
-- It returns questions based on the category
+DELETE '/movies/<movie_id>'
+- It deletes the movie with the passed movie_id
 - Request Arguments: None
-- Returns:
+- Returns: Success as true if the movie_id was present , 404 error if the movie_id was not present
 
-total_questions - the total number of questions in the database
-
-current_category - The current category
-
-questions - A list of question objects
-
-
-If the page is within limits
+IF movie_id is available
 
 {
-  "current_category": "1",
-  "questions": [
-    {
-      "answer": "The Liver",
-      "category": 1,
-      "difficulty": 4,
-      "id": 20,
-      "question": "What is the heaviest organ in the human body?"
-    },
-    {
-      "answer": "Alexander Fleming",
-      "category": 1,
-      "difficulty": 3,
-      "id": 21,
-      "question": "Who discovered penicillin?"
-    },
-    {
-      "answer": "Blood",
-      "category": 1,
-      "difficulty": 4,
-      "id": 22,
-      "question": "Hematology is a branch of medicine involving the study of what?"
-    },
-    {
-      "answer": "Test",
-      "category": 1,
-      "difficulty": 1,
-      "id": 24,
-      "question": "Test"
-    },
-    {
-      "answer": "Test",
-      "category": 1,
-      "difficulty": 1,
-      "id": 25,
-      "question": "Who am I"
-    }
-  ],
-  "success": true,
-  "total_questions": 5
+  "success": true
 }
 
-If there is no questions in the category
+IF movie_id is not available
 
 {
   "error": 404,
@@ -317,53 +207,60 @@ If there is no questions in the category
   "success": false
 }
 
-If the category is not available
-
-{
-   "success":False,
-   "error":400,
-   "message":"Bad Request"
-}
-
-POST '/quizzes'
-
-- This endpoint is to get questions to play the quiz.
- This endpoint should take category and previous question parameters
- and return a random questions within the given category,
- if provided, and that is not one of the previous questions.
+DELETE '/actors/<actor_id>'
+- It deletes the actors with the passed mactor_idovie_id
 - Request Arguments: None
-- Request Body : contains the search_term
-Example
-{'quiz_category': {'type':'History','id':'4'} ,'previous_questions':[]})
-- Returns:
+- Returns: Success as true if the actor_id was present , 404 error if the actor_id was not present
 
-If success , it returns a question
+IF actor_id is available
 
 {
-  "question": {
-    "answer": "George Washington Carver",
-    "category": 4,
-    "difficulty": 2,
-    "id": 12,
-    "question": "Who invented Peanut Butter?"
-  },
   "success": true
 }
 
-If there is not questions remaining in the category it returns False
+IF movie_id is not available
 
 {
-  "success": False
+  "error": 404,
+  "message": "Not Found",
+  "success": false
 }
 
-If the category is wrong it returns error
+PATCH '/actors/<actor_id>'
+- It updates the actors with the passed actor , with the values passed in the body
+- Request Arguments: None
+- Request Body : could contain any one or all of name, age and gender.
 
+- Sample Body  
+
+  {
+    "gender":"Female"
+  }
+
+- Returns: Success as true and the actor object if the actor_id was present , 404 error if the actor_id was not present
+
+IF actor_id is available
 
 {
-   "success":False,
-   "error":400,
-   "message":"Bad Request"
+    "actor": {
+        "age": 46,
+        "gender": "Female",
+        "id": 2,
+        "name": "Vijay"
+    },
+    "success": true
 }
+
+IF actor_id is not available
+
+{
+  "error": 404,
+  "message": "Not Found",
+  "success": false
+}
+
+
+
 
 ## Testing
 To run the tests, run
