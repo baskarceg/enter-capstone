@@ -134,7 +134,7 @@ def create_app(test_config=None):
                 movie.update()
 
                 return jsonify({
-                'movie' : movie.format()
+                'movie' : movie.format(),
                 'success' : True
                 })
 
