@@ -13,11 +13,18 @@ def create_app(test_config=None):
     setup_db(app)
     CORS(app)
 
+    '''
+    Endpoint to test if the application is UP
+    '''
+
     @app.route('/')
     def get_greeting():
         return "Welcome to Capstone Casting Agency"
 
-
+    '''
+    Endpoint to handle GET requests
+    for all available movies.
+    '''
 
     @app.route('/movies')
     @requires_auth('get:movies')
@@ -32,6 +39,11 @@ def create_app(test_config=None):
         except AttributeError:
             abort(400)
 
+    '''
+    Endpoint to handle GET requests
+    for all available actors.
+    '''
+
     @app.route('/actors')
     @requires_auth('get:actors')
     def get_all_actors(payload):
@@ -44,6 +56,10 @@ def create_app(test_config=None):
             })
         except AttributeError:
             abort(400)
+
+    '''
+    Endpoint to handle POST requests for movies.
+    '''
 
     @app.route('/movies', methods=['POST'])
     @requires_auth('post:movies')
@@ -62,6 +78,10 @@ def create_app(test_config=None):
         except IntegrityError:
             abort(400)
 
+    '''
+    Endpoint to handle POST requests for actors.
+    '''
+
     @app.route('/actors', methods=['POST'])
     @requires_auth('post:actors')
     def create_new_actor(payload):
@@ -79,6 +99,10 @@ def create_app(test_config=None):
         except IntegrityError:
             abort(400)
 
+    '''
+    Endpoint to handle DELETE requests for movies.
+    '''
+
     @app.route('/movies/<movie_id>', methods=['DELETE'])
     @requires_auth('delete:movies')
     def delete_a_movie(payload, movie_id):
@@ -93,6 +117,10 @@ def create_app(test_config=None):
             'success' : True
             })
 
+    '''
+    Endpoint to handle DELETE requests for actors.
+    '''
+
     @app.route('/actors/<actor_id>', methods=['DELETE'])
     @requires_auth('delete:actors')
     def delete_an_actor(payload, actor_id):
@@ -106,6 +134,10 @@ def create_app(test_config=None):
             return jsonify({
             'success' : True
             })
+
+    '''
+    Endpoint to handle PATCH requests for movies.
+    '''
 
     @app.route('/movies/<movie_id>', methods=['PATCH'])
     @requires_auth('patch:movies')
@@ -135,6 +167,10 @@ def create_app(test_config=None):
 
         except IntegrityError:
             abort(400)
+
+    '''
+    Endpoint to handle PATCH requests for actors.
+    '''
 
     @app.route('/actors/<actor_id>', methods=['PATCH'])
     @requires_auth('patch:actors')
