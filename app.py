@@ -106,16 +106,19 @@ def create_app(test_config=None):
     @app.route('/movies/<movie_id>', methods=['DELETE'])
     @requires_auth('delete:movies')
     def delete_a_movie(payload, movie_id):
-        movie = Movie.query.filter(Movie.id==movie_id).one_or_none()
+        try:
+            movie = Movie.query.filter(Movie.id==movie_id).one_or_none()
 
-        if movie is None:
+            if movie is None:
+                abort(404)
+
+            else :
+                movie.delete()
+                return jsonify({
+                'success' : True
+                })
+        except:
             abort(404)
-
-        else :
-            movie.delete()
-            return jsonify({
-            'success' : True
-            })
 
     '''
     Endpoint to handle DELETE requests for actors.
@@ -124,16 +127,19 @@ def create_app(test_config=None):
     @app.route('/actors/<actor_id>', methods=['DELETE'])
     @requires_auth('delete:actors')
     def delete_an_actor(payload, actor_id):
-        actor = Actor.query.filter(Actor.id==actor_id).one_or_none()
+        try:
+            actor = Actor.query.filter(Actor.id==actor_id).one_or_none()
 
-        if actor is None:
+            if actor is None:
+                abort(404)
+
+            else :
+                actor.delete()
+                return jsonify({
+                'success' : True
+                })
+        except:
             abort(404)
-
-        else :
-            actor.delete()
-            return jsonify({
-            'success' : True
-            })
 
     '''
     Endpoint to handle PATCH requests for movies.
@@ -142,11 +148,10 @@ def create_app(test_config=None):
     @app.route('/movies/<movie_id>', methods=['PATCH'])
     @requires_auth('patch:movies')
     def modify_a_movie(payload, movie_id):
-        movie = Movie.query.filter(Movie.id==movie_id).one_or_none()
-
-        body=request.get_json()
 
         try:
+            movie = Movie.query.filter(Movie.id==movie_id).one_or_none()
+            body=request.get_json()
             if body is None:
                 abort(400)
 
@@ -175,11 +180,10 @@ def create_app(test_config=None):
     @app.route('/actors/<actor_id>', methods=['PATCH'])
     @requires_auth('patch:actors')
     def modify_an_actor(payload, actor_id):
-        actor = Actor.query.filter(Actor.id==actor_id).one_or_none()
-
-        body=request.get_json()
 
         try:
+            actor = Actor.query.filter(Actor.id==actor_id).one_or_none()
+            body=request.get_json()
             if body is None:
                 abort(400)
 
