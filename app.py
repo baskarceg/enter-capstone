@@ -2,7 +2,7 @@ import os
 from flask import Flask, jsonify, request, abort
 from models import setup_db
 from flask_cors import CORS
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, DataError
 from models import Movie, Actor
 
 from auth import AuthError, requires_auth
@@ -78,6 +78,9 @@ def create_app(test_config=None):
         except IntegrityError:
             abort(400)
 
+        except DataError:
+            abort(400)
+
     '''
     Endpoint to handle POST requests for actors.
     '''
@@ -97,6 +100,9 @@ def create_app(test_config=None):
                 'success' : True
                 })
         except IntegrityError:
+            abort(400)
+
+        except DataError:
             abort(400)
 
     '''
@@ -152,8 +158,11 @@ def create_app(test_config=None):
         try:
             movie = Movie.query.filter(Movie.id==movie_id).one_or_none()
             body=request.get_json()
-            if body is None:
+            if body is None :
                 abort(400)
+
+            elif movie is None :
+                abort(404)
 
             else:
 
@@ -184,8 +193,11 @@ def create_app(test_config=None):
         try:
             actor = Actor.query.filter(Actor.id==actor_id).one_or_none()
             body=request.get_json()
-            if body is None:
+            if body is None :
                 abort(400)
+
+            elif actor is None :
+                abort(404)
 
             else:
 
