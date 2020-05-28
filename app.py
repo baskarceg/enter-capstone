@@ -13,17 +13,11 @@ def create_app(test_config=None):
     setup_db(app)
     CORS(app)
 
-    # @app.route('/')
-    # @requires_auth('get:drinks-detail')
-    # def get_greeting(payload):
-    #     excited = 'true'
-    #     greeting = "Fuck You"
-    #     if excited == 'true': greeting = greeting + "!!!!!"
-    #     return greeting
-    #
-    # @app.route('/coolkids')
-    # def be_cool():
-    #     return "Be cool, man, be coooool! You're almost a FSND grad!"
+    @app.route('/')
+    def get_greeting():
+        return "Welcome to Capstone Casting Agency"
+
+
 
     @app.route('/movies')
     @requires_auth('get:movies')
@@ -76,7 +70,8 @@ def create_app(test_config=None):
             if body is None:
                 abort(400)
             else:
-                actor = Actor(body["name"], body["age"], body["gender"])
+                actor = Actor(body["name"], body["age"],
+                body["gender"])
                 actor.insert()
                 return jsonify({
                 'success' : True

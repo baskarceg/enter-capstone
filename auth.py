@@ -7,12 +7,10 @@ import os
 from jose import exceptions
 
 
-AUTH0_DOMAIN = 'udacitybaskar.auth0.com'
-#AUTH0_DOMAIN = os.environ['AUTH_DOMAIN']
-ALGORITHMS = ['RS256']
-#ALGORITHMS = os.environ['ALGORITHMS']
-API_AUDIENCE = 'casting'
-#API_AUDIENCE = os.environ['API_AUDIENCE']
+
+AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
+ALGORITHMS = os.environ['ALGORITHMS']
+API_AUDIENCE = os.environ['API_AUDIENCE']
 
 ## AuthError Exception
 '''
@@ -103,12 +101,12 @@ def check_permissions(permission, payload):
     !!NOTE urlopen has a common certificate error described here: https://stackoverflow.com/questions/50236117/scraping-ssl-certificate-verify-failed-error-for-http-en-wikipedia-org
 '''
 def verify_decode_jwt(token):
-    print("Passed 3")
+    #print("Passed 3")
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
-    print("Passed 4")
+    #print("Passed 4")
     jwks = json.loads(jsonurl.read())
     rsa_key = {}
-    print("Passed 5")
+    #print("Passed 5")
     try:
         unverified_header = jwt.get_unverified_header(token)
     except exceptions.JWTError:
@@ -131,7 +129,7 @@ def verify_decode_jwt(token):
                 'n': key['n'],
                 'e': key['e']
             }
-    print("Passed 7")
+    #print("Passed 7")
     if rsa_key:
         try:
             payload = jwt.decode(
@@ -180,9 +178,9 @@ def requires_auth(permission=''):
         @wraps(f)
         def wrapper(*args, **kwargs):
             token = get_token_auth_header()
-            print("Passed 1")
+            #print("Passed 1")
             payload = verify_decode_jwt(token)
-            print("Passed 2")
+            #print("Passed 2")
             check_permissions(permission, payload)
             return f(payload, *args, **kwargs)
 
